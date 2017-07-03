@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/sl/colorls-js#readme",
   "dependencies": {
+    "colors": "^1.1.2",
     "js-yaml": "^3.8.4"
   }
 }
