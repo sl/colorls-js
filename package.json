@@ -1,0 +1,29 @@
+{
+  "name": "colorls",
+  "version": "1.0.0",
+  "description": "A node port of https://github.com/athityakumar/colorls.",
+  "scripts": {
+    "test": "test"
+  },
+  "bin": {
+    "lc": "./lc.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sl/colorls-js.git"
+  },
+  "keywords": [
+    "color",
+    "terminal",
+    "ls"
+  ],
+  "author": "sl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sl/colorls-js/issues"
+  },
+  "homepage": "https://github.com/sl/colorls-js#readme",
+  "dependencies": {
+    "js-yaml": "^3.8.4"
+  }
+}
