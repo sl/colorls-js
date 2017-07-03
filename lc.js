@@ -4,6 +4,8 @@ const fs = require('fs');
 
 const yaml = require('js-yaml');
 
+const colors = require('colors');
+
 var ColorLS = class ColorLS {
 
 	constructor(input, report) {
@@ -64,6 +66,32 @@ var ColorLS = class ColorLS {
 			});
 		});
 		this.max_widths = transposed.map(row => Math.max(... row.map(s => s.length)));
+		return chunk;
+	}
+
+	in_line(chunk_size) {
+		return !(this.max_widths.reduce((a, b) => a + b, 0) + 6 * chunk_size > this.screen_width);
+	}
+
+	display_report() {
+		process.stdout.write('\n Found ${this.contents.length} contents in directory '.white);
+
+		process.stdout.write(this.input.blue);
+
+		process.stdout.write('\n\n\tFolders\t\t\t: ${this.count.folders}'.white);
+		process.stdout.write('\n\tRecognized files\t: ${this.count.recognized_files}'.white);
+		process.stdout.write('\n\tUnrecognized files\t: ${this.count.unrecognized_files}'.white);
+	}
+
+	fetch_string(content, key, color, increment) {
+		this.count[increment] += 1;
+		var value = increment === 'folders' ? this.folders[key] : this.files[key];
+		// todo -- port this line
+		// how it works for my future self:
+		// 	- value.gsub(/\\u[\da-f]{4}/i) matches and replaces all strings that look like unicode characters
+		//  - it does the replacement by running each match through the function m -> m[-4..-1.to_i(16)].pack('U')
+		// this last part needs to be disected still, but it seems to make enough sense.
+		// logo  = value.gsub(/\\u[\da-f]{4}/i) { |m| [m[-4..-1].to_i(16)].pack('U') }
 	}
 
 	load_from_yaml(filename, aliases) {
