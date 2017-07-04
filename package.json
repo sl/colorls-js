@@ -6,7 +6,7 @@
     "test": "test"
   },
   "bin": {
-    "lsc": "./lc.js"
+    "lc": "./lc.js"
   },
   "repository": {
     "type": "git",
