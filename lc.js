@@ -91,7 +91,8 @@ var ColorLS = class ColorLS {
 	}
 
 	display_report() {
-		process.stdout.write(util.format(`\n Found ${this.contents.length} contents in directory `.white));
+		const len = this.contents.reduce((a, b) => a.concat(b), []).length;
+		process.stdout.write(util.format(`\n Found ${len} contents in directory `.white));
 
 		process.stdout.write(util.format(this.input.blue));
 
