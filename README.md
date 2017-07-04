@@ -25,6 +25,10 @@ Screenshots taken from original repository for the ruby version, but the output 
 
 # Installation steps
 
+Note: The package is not currently on the NPM registry. Until it is, you will need to install via the second listed method.
+
+This readme will be updated once the package is released.
+
 1. Install Node and npm.
 2. Install the patched fonts of powerline nerd-font and/or font-awesome.
 3. `npm install -g colorls-js`
