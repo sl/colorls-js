@@ -33,7 +33,7 @@ var ColorLS = class ColorLS {
 		this.contents.forEach((chunk) => this.ls_line(chunk));
 		process.stdout.write(util.format('\n'));
 		if (this.report) {
-			display_report();
+			this.display_report();
 		}
 	}
 
@@ -98,6 +98,7 @@ var ColorLS = class ColorLS {
 		process.stdout.write(util.format(`\n\n\tFolders\t\t\t: ${this.count.folders}`.white));
 		process.stdout.write(util.format(`\n\tRecognized files\t: ${this.count.recognized_files}`.white));
 		process.stdout.write(util.format(`\n\tUnrecognized files\t: ${this.count.unrecognized_files}`.white));
+		process.stdout.write(util.format('\n\n'));
 	}
 
 	fetch_string(content, key, color, increment) {
