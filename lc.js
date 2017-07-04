@@ -76,6 +76,7 @@ var ColorLS = class ColorLS {
 		while (currentChunk.length < chunk_size) {
 			currentChunk.push('');
 		}
+		chunk.push(currentChunk);
 		var transposed = chunk[0].map(function(col, i) {
 			return chunk.map(function(row) {
 				return row[i];
