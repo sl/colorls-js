@@ -146,7 +146,7 @@ var ColorLS = class ColorLS {
 				return ['folder', 'blue', 'folders'];
 			}
 			if (this.folder_keys.indexOf(key) === -1) {
-				key = this.folder_alises[key];
+				key = this.folder_aliases[key];
 			}
 			return [key, 'blue', 'folders'];
 		}
