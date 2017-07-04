@@ -142,7 +142,7 @@ var ColorLS = class ColorLS {
 		if (fs.existsSync(`${this.input}/${content}`) &&
 				fs.lstatSync(`${this.input}/${content}`).isDirectory()) {
 			key = content;
-			if (!this.all_folders.hasOwnProperty(key)) {
+			if (this.all_folders.indexOf(key) === -1) {
 				return ['folder', 'blue', 'folders'];
 			}
 			if (this.folder_keys.indexOf(key) === -1) {
