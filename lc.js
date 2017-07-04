@@ -173,7 +173,7 @@ if (filtered.length === 0) {
 	new ColorLS(null, report).ls();
 } else {
 	args.forEach((path) => {
-		ColorLS.new(path, report).ls();
+		new ColorLS(path, report).ls();
 	});
 }
 
