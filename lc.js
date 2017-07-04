@@ -114,12 +114,6 @@ var ColorLS = class ColorLS {
 	load_from_yaml(filename, aliases) {
 		const location = path.join(__dirname, filename);
 		var loaded = yaml.safeLoad(fs.readFileSync(location, 'utf8'));
-		if (!aliases) {
-			return loaded;
-		}
-		for (var key in loaded) {
-			loaded[key] = Symbol(loaded[key]);
-		}
 		return loaded;
 	}
 
@@ -133,8 +127,10 @@ var ColorLS = class ColorLS {
 			var opt = this.options(content);
 			var fetch = this.fetch_string(content, opt[0], opt[1], opt[2]);
 			process.stdout.write(util.format(fetch));
-			process.stdout.write(util.format(fs.existsSync(`${this.input}/${content}`) ? '/'.blue : ' '));
-			var space = new Array(this.max_widths[i] - content.length + 1).join(' ');
+			var isFile = fs.existsSync(`${this.input}/${content}`) &&
+				fs.lstatSync(`${this.input}/${content}`).isDirectory();
+			process.stdout.write(util.format(isFile ? '/ '.blue : '  '));
+			var space = new Array(this.max_widths[i] - content.length + 2).join(' ');
 			process.stdout.write(util.format(space));
 		}
 	}
