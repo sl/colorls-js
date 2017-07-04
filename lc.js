@@ -1,6 +1,9 @@
+#!/usr/bin/env node
+
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 
 const yaml = require('js-yaml');
 
@@ -35,10 +38,10 @@ var ColorLS = class ColorLS {
 	}
 
 	init_icons() {
-		this.files = this.load_from_yaml('files.yaml');
-		this.file_aliases = this.load_from_yaml('file_aliases.yaml', true);
-		this.folders = this.load_from_yaml('folders.yaml');
-		this.folder_aliases = this.load_from_yaml('folder_aliases.yaml');
+		this.files = this.load_from_yaml('./files.yaml');
+		this.file_aliases = this.load_from_yaml('./file_aliases.yaml', true);
+		this.folders = this.load_from_yaml('./folders.yaml');
+		this.folder_aliases = this.load_from_yaml('./folder_aliases.yaml');
 
 		this.file_keys = Object.keys(this.files);
 		this.file_alias_keys = Object.keys(this.file_aliases);
@@ -98,7 +101,7 @@ var ColorLS = class ColorLS {
 
 	fetch_string(content, key, color, increment) {
 		this.count[increment] += 1;
-		var value = increment === 'folder' ? this.folders[key] : this.files[key];
+		var value = increment === 'folders' ? this.folders[key] : this.files[key];
 		// todo -- port this line
 		// how it works for my future self:
 		// 	- value.gsub(/\\u[\da-f]{4}/i) matches and replaces all strings that look like unicode characters
@@ -109,7 +112,8 @@ var ColorLS = class ColorLS {
 	}
 
 	load_from_yaml(filename, aliases) {
-		var loaded = yaml.safeLoad(fs.readFileSync(filename, 'utf8'));
+		const location = path.join(__dirname, filename);
+		var loaded = yaml.safeLoad(fs.readFileSync(location, 'utf8'));
 		if (!aliases) {
 			return loaded;
 		}
@@ -137,17 +141,19 @@ var ColorLS = class ColorLS {
 
 	options(content) {
 		var key;
-		if (fs.existsSync(`${this.input}/${content}`)) {
+		if (fs.existsSync(`${this.input}/${content}`) &&
+				fs.lstatSync(`${this.input}/${content}`).isDirectory()) {
 			key = content;
 			if (!this.all_folders.hasOwnProperty(key)) {
-				return ['folder', 'blue', 'folder'];
+				return ['folder', 'blue', 'folders'];
 			}
 			if (this.folder_keys.indexOf(key) === -1) {
 				key = this.folder_alises[key];
 			}
 			return [key, 'blue', 'folders'];
 		}
-		key = content.split('.')[content.length - 1].toLowerCase();
+		var split = content.split('.');
+		key = split[split.length - 1].toLowerCase();
 		if (this.all_files.indexOf(key) === -1) {
 			return ['file', 'yellow', 'unrecognized_files'];
 		}
